@@ -44,7 +44,7 @@ export default function Home({handleCallback}) {
     if (response.error) {
       // friendly error message 
       let errorMessage = response.error;
-      if(data?.status === 500){
+      if(response.error !== 'Location not available'){
         errorMessage = 'Server request failed'
       } 
       toast.error(errorMessage?.toUpperCase(), {
