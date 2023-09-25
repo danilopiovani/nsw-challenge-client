@@ -8,3 +8,9 @@
   align-items: center;
   padding-bottom: 30px;
 }
+
+@media (max-width: 768px) {
+  .footer{
+    max-height: 10dvh;
+  }
+}
