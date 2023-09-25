@@ -42,7 +42,12 @@ export default function Home({handleCallback}) {
 
     // error handling
     if (response.error) {
-      toast.error(response?.error?.toUpperCase(), {
+      // friendly error message 
+      let errorMessage = response.error;
+      if(response.error !== 'Location not available'){
+        errorMessage = 'Server request failed'
+      } 
+      toast.error(errorMessage?.toUpperCase(), {
         position: "bottom-right",
         theme: "colored",
         hideProgressBar: false,

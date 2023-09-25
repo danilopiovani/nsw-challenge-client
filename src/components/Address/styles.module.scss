@@ -10,3 +10,10 @@
     white-space: nowrap;
   }
 }
+
+@media (max-width: 768px) {
+  .searchWrapper {
+    flex-direction: column;
+    gap:10px;
+  }
+}
