@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 
 interface Suggestion {
@@ -10,35 +10,39 @@ type Props = {
   callback: (value: string) => void;
   callbackClick: (value: string) => void;
   suggestions: Suggestion[];
-}
+};
 
 const SearchInput = (props: Props) => {
   const { callback, callbackClick, suggestions } = props;
   const suggestionBoxRef = useRef<HTMLDivElement | null>(null);
   const [isSuggestionOpen, setSuggestionOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestionsList, setSuggestionsList] = useState<Suggestion[]>(suggestions);
+  const [suggestionsList, setSuggestionsList] =
+    useState<Suggestion[]>(suggestions);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (suggestionBoxRef.current && !suggestionBoxRef.current.contains(event.target as Node)) {
+      if (
+        suggestionBoxRef.current &&
+        !suggestionBoxRef.current.contains(event.target as Node)
+      ) {
         setSuggestionOpen(false);
       }
-    }
+    };
 
     if (isSuggestionOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSuggestionOpen]);
 
   useEffect(() => {
-    if(suggestions?.length > 0) {
+    if (suggestions?.length > 0) {
       setSuggestionsList(suggestions);
     }
   }, [suggestions]);
@@ -46,7 +50,9 @@ const SearchInput = (props: Props) => {
   return (
     <div className={styles.inputWrapper}>
       <input
-        className={`${styles.input} ${suggestionsList?.length > 0 ? styles.withSuggestions : ""}`}
+        className={`${styles.input} ${
+          suggestionsList?.length > 0 ? styles.withSuggestions : ""
+        }`}
         type="text"
         value={searchTerm}
         onChange={(e) => {
@@ -70,7 +76,12 @@ const SearchInput = (props: Props) => {
                   <div
                     className={styles.suggestionItem}
                     key={suggestion?.placeId}
-                    onClick={() => {callbackClick(suggestion?.text || ""); setSuggestionsList([]); setSearchTerm(''); setSuggestionOpen(false);}}
+                    onClick={() => {
+                      callbackClick(suggestion?.text || "");
+                      setSuggestionsList([]);
+                      setSearchTerm("");
+                      setSuggestionOpen(false);
+                    }}
                   >
                     <p>{suggestion?.text}</p>
                   </div>
@@ -81,7 +92,7 @@ const SearchInput = (props: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SearchInput;

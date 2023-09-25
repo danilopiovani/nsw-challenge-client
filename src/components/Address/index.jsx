@@ -1,16 +1,20 @@
 import { useEffect, useCallback, useState, useRef } from "react";
 import { getSuggestions, getPlaceById, getFullAddressType } from "@utils";
-import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
 import { SearchInput } from "@components";
+import styles from "./styles.module.scss";
 
 export default function Home({handleCallback}) {
+  // ref
   const suggestionBoxRef = useRef(null);
+
+  // local states
   const [suggestions, setSuggestions] = useState([]);
   const [isSuggestionOpen, setSuggestionOpen] = useState(false);
 
+  // close the suggestions when clicked outside
   useEffect(() => {
-    function handleClickOutside(event) {
+    const handleClickOutside = (event) => {
       if (
         suggestionBoxRef.current &&
         !suggestionBoxRef.current.contains(event.target)
@@ -30,11 +34,13 @@ export default function Home({handleCallback}) {
     };
   }, [isSuggestionOpen]);
 
+  // Address Lookup API
   const checkAPI = async (address, fullObject) => {
     const addressToFetch = `https://2akh2cutvnp4ztx3vlvfm6vmcu0sobzg.lambda-url.ap-southeast-2.on.aws/?address=${address}`;
     const data = await fetch(addressToFetch);
     const response = await data.json();
 
+    // error handling
     if (response.error) {
       toast.error(response?.error?.toUpperCase(), {
         position: "bottom-right",
@@ -51,6 +57,7 @@ export default function Home({handleCallback}) {
   const handleGetPlaceById = async (suggestion) => {
     setSuggestionOpen(false);
     await getPlaceById(suggestion).then(async (res) => {
+      // TODO: improve this function logic
       const locationInfo = res?.[0];
 
       // NUMBER+STREET+SUBURB
@@ -73,13 +80,14 @@ export default function Home({handleCallback}) {
         locationStreetType?.toLowerCase()
       );
       
-      // create the street combined street name and street type
+      // CREATE THE STREET COMBINED STREET NAME AND STREET TYPE
       const locationStreetTypeCombined = `${locationStreet}+${locationStreetTypeFull}`;
       const locationSuburb = locationInfo?.neighborhood?.replaceAll(" ", "+");
       let addressToFindLocation = `${locationNumber}+${locationStreetTypeCombined}+${locationSuburb}`;
       if (unitNumber) {
         addressToFindLocation = `${unitNumber}%2F${addressToFindLocation}`;
       }
+
       await checkAPI(addressToFindLocation?.toUpperCase(), locationInfo);
     });
   };
