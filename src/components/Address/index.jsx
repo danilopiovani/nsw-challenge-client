@@ -42,7 +42,12 @@ export default function Home({handleCallback}) {
 
     // error handling
     if (response.error) {
-      toast.error(response?.error?.toUpperCase(), {
+      // friendly error message 
+      let errorMessage = response.error;
+      if(data?.status === 500){
+        errorMessage = 'Server request failed'
+      } 
+      toast.error(errorMessage?.toUpperCase(), {
         position: "bottom-right",
         theme: "colored",
         hideProgressBar: false,

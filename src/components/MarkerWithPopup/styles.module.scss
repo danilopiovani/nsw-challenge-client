@@ -34,3 +34,9 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .mapPopUp {
+    min-width: 90vw !important;
+  }
+}
