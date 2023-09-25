@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { Marker, Popup } from "react-map-gl";
-import "@aws-amplify/ui-react-geo/styles.css";
 import styles from "./styles.module.scss";
-
+import "@aws-amplify/ui-react-geo/styles.css";
 
 export default function MarkerWithPopup({ latitude, longitude, markerInfo }) {
   const [showPopup, setShowPopup] = useState(false);
 
+  // update info when receive a new info
+  useEffect(() => {
+    setShowPopup(true);
+  }, [markerInfo]);
+
+  // toggle popup
   const handleMarkerClick = ({ originalEvent }) => {
     originalEvent.stopPropagation();
     setShowPopup(true);
   };
-
-  useEffect(() => {
-    setShowPopup(true);
-  }, [markerInfo]);
 
   return (
     <>

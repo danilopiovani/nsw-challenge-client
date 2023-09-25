@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
 import { MapView } from "@aws-amplify/ui-react-geo";
+import { MarkerWithPopup } from "@components";
 import "@aws-amplify/ui-react-geo/styles.css";
 import styles from "./styles.module.scss";
-import { MarkerWithPopup } from "@components";
 
 export default function Home({ locationInfo }) {
   const mapRef = useRef();
@@ -10,6 +10,7 @@ export default function Home({ locationInfo }) {
     mapRef.current.flyTo(value);
   };
 
+  // move to the location point
   useEffect(() => {
     if (locationInfo?.location?.latitude && locationInfo?.location?.longitude) {
       flyToMordor({
@@ -17,7 +18,7 @@ export default function Home({ locationInfo }) {
           locationInfo?.location?.longitude,
           locationInfo?.location?.latitude,
         ],
-        zoom: 9,
+        zoom: 12,
       });
     }
   }, [locationInfo]);
@@ -26,9 +27,9 @@ export default function Home({ locationInfo }) {
     <div className={styles.mapWrapper}>
       <MapView
         initialViewState={{
-          latitude: -33.783721627567,
-          longitude: 151.067490703923,
-          zoom: 9,
+          latitude: -33.8559799094,
+          longitude: 151.20666584,
+          zoom: 12,
         }}
         ref={mapRef}
       >
