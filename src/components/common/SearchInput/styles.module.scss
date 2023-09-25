@@ -1,0 +1,50 @@
+
+  .inputWrapper{
+    width: 600px;
+    .input{
+      width: 100%;
+      height: 40px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 1rem;
+      &.withSuggestions{
+      &:focus {
+        outline: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom:none;
+      }}
+    }
+    .suggestionWrapper{
+      
+    .suggestionContainer {
+      
+      position: relative;
+      z-index: 10;
+      .suggestionBox {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left:0;
+        width: 100%;
+        background-color: #FFF;
+        .suggestionItem {
+          padding: 5px;
+          cursor: pointer;
+          &:hover {
+            background-color: lightblue;
+          }
+        }
+        &.open{
+          display: block;
+          border:1px solid #333;
+      border-top:none;
+      border-radius: 8px;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+        }
+      }
+    }
+    }
+  } 
